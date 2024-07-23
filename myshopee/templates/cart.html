@@ -1,0 +1,62 @@
+
+
+<!DOCTYPE html>
+{% extends 'navbar.html' %}
+{% load static %}
+{% block content %}
+<div class="container">
+  <div class="row">
+    <center><h3 style="text-align:center">Shopping Cart</h3></center>
+    <br><br>
+    <div class="col-8">
+      <table class="table table-bordered" style="margin-top:100px">
+        <tr>
+          <th colspan="6">Cart Items</th>
+        </tr>
+
+        {% for i in cart %}
+        <tr>
+          <td><img src="{{ i.product.p_image.url }}" width="150px" height="150px"></td>
+          <td>{{ i.product.p_name }}</td>
+          <td>Product ID: {{ i.product.id }}</td>
+          <td>Quantity: {{ i.quantity }}</td>
+          <td>Unit Price: {{ i.product.price }}</td>
+          <td>Subtotal:{{i.subtotal}}
+            <br></td>
+          <td>
+            {% if i.product.p_stock > 0 %}
+              <a href="{% url 'cart:addtocart' i.product.id %}"><i class="fa-solid fa-circle-plus"></i></a>
+            <br>
+            <a href="{% url 'cart:cart_decrement' i.product.id %}"><i class="fa-solid fa-circle-minus"></i></a>
+            <br>
+            <a href="{% url 'cart:remove' i.product.id %}"><i class="fa-solid fa-trash-can"></i></a>
+            {% else %}
+             <a href="{% url 'cart:cart_decrement' i.product.id %}"><i class="fa-solid fa-circle-minus"></i></a>
+            <br>
+            <a href="{% url 'cart:remove' i.product.id %}"><i class="fa-solid fa-trash-can"></i></a>
+            {% endif %}
+          </td>
+
+        </tr>
+        {% endfor %}
+      </table>
+    </div>
+    <div class="col">
+      <table class="table table-bordered" style="margin-top:100px">
+        <tr>
+          <th colspan="2">Checkout</th>
+        </tr>
+        <tr>
+          <td>Total Amount</td>
+          <td>{{total}}</td>
+        </tr>
+        <tr><td><a href="{% url 'cart:placeorder'  %}"><button>Place order</button></a></td>
+          <br>
+        <td><a href="{% url 'cart:continuee'  %}"><button>Continue Shopping </button></a></td></tr>
+
+
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+{% extends 'navbar.html' %}
+{% load static %}
+{% block content %}
+
+<center style="margin-top:200px">
+    <div class="container">
+  <div class="row">
+    <div class="col">
+      <img src="{{ product.p_image.url }}">
+    </div>
+    <div class="col">
+      <h1>{{ product.p_name }}</h1>
+      <h1>{{ product.p_stock }}</h1>
+      <h2>Product Details</h2>
+      {{ product.p_desc }}
+      {% if user.is_superuser == True %}
+
+            {% if product.p_stock > 0 %}
+                <h3 class="text-success">Product in Stock</h3>
+                <a style="text-decoration:none" href="{% url 'admin:index' %}" class="btn_1">Add Stock</a>
+            {% else %}
+                <h3 class="text-success">Out of Stock</h3>
+                <a style="text-decoration:none" href="{% url 'admin:index' %}" class="btn_1">Add Stock</a>
+            {% endif %}
+        {% else %}
+
+            {% if product.p_stock > 0 %}
+                <a style="text-decoration:none" href="{% url 'cart:addtocart' product.id %}" class="btn_1">Add to Cart</a>
+                <p class="ltext-102 cl5 text-success">Product in Stock</p>
+                <br><br>
+                <a href="#" class="btn flex-c-m stext-103 cl2 size-102 bg1 bor2 hov-btn1 p-lr-15 trans-04">Buy Now</a><br>
+            {% else %}
+                <h3 class="text-success">Out of Stock</h3>
+            {% endif %}
+  {% endif%}
+    </div>
+  </div>
+</div>
+
+
+</center>
+<!--{% endblock %}-->
+<!--                        {% if user.is_superuser == True %}-->
+<!--							{% if pd.p_stock > 0 %}-->
+<!--								<p class="ltext-102 cl5 text-success">Product in Stock</p>-->
+<!--								<a href="{% url 'admin:index' %}"><p class="ltext-102 cl3 ">Add Stock</p></a>-->
+<!--							{% else %}-->
+<!--								<p class="ltext-102 cl5 text-danger">Out of Stock</p>-->
+<!--								<a href="{% url 'admin:index' %}"><p class="ltext-102 cl5 ">Add Stock</p></a>-->
+<!--							{% endif %}-->
+<!--						{% else %}-->
+<!--							{% if pd.p_stock > 0 %}-->
+<!--								<p class="ltext-102 cl5 text-success">Product in Stock</p>-->
+<!--								<br><br>-->
+<!--								<a href="#" class="btn flex-c-m stext-103 cl2 size-102 bg1 bor2 hov-btn1 p-lr-15 trans-04">Buy Now</a><br>-->
+<!--								<a href="{% url 'cart:add_to_cart' pd.id %}" class="btn flex-c-m stext-103 cl2 size-102 bg1 bor2 hov-btn1 p-lr-15 trans-04">Add to Cart</a>-->
+<!--							{% else %}-->
+<!--								<p class="ltext-102 cl5 text-danger">Out of Stock</p>-->
+<!--							{% endif %}-->
+<!--						{% endif %}-->
